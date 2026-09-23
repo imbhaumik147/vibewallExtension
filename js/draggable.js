@@ -1,0 +1,71 @@
+/**
+ * Helper to make any element draggable on the viewport
+ * with automatic boundary constraints and position saving.
+ */
+function makeDraggable(element, handle, onPositionSaved) {
+  let isDragging = false;
+  let startX, startY;
+  let initialLeft, initialTop;
+
+  handle.addEventListener('mousedown', startDrag);
+
+  function startDrag(e) {
+    // Only left click
+    if (e.button !== 0) return;
+    isDragging = true;
+    element.classList.add('dragging');
+
+    const rect = element.getBoundingClientRect();
+    initialLeft = rect.left;
+    initialTop = rect.top;
+
+    startX = e.clientX;
+    startY = e.clientY;
+
+    // Reset right/bottom positioning to explicit left/top
+    element.style.left = `${initialLeft}px`;
+    element.style.top = `${initialTop}px`;
+    element.style.right = 'auto';
+    element.style.bottom = 'auto';
+
+    document.addEventListener('mousemove', onDrag);
+    document.addEventListener('mouseup', stopDrag);
+    e.preventDefault();
+  }
+
+  function onDrag(e) {
+    if (!isDragging) return;
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
+
+    let newLeft = initialLeft + dx;
+    let newTop = initialTop + dy;
+
+    // Viewport boundaries
+    const maxLeft = window.innerWidth - element.offsetWidth - 10;
+    const maxTop = window.innerHeight - element.offsetHeight - 10;
+
+    newLeft = Math.max(10, Math.min(newLeft, maxLeft));
+    newTop = Math.max(10, Math.min(newTop, maxTop));
+
+    element.style.left = `${newLeft}px`;
+    element.style.top = `${newTop}px`;
+  }
+
+  function stopDrag() {
+    if (!isDragging) return;
+    isDragging = false;
+    element.classList.remove('dragging');
+
+    document.removeEventListener('mousemove', onDrag);
+    document.removeEventListener('mouseup', stopDrag);
+
+    const finalRect = element.getBoundingClientRect();
+    if (onPositionSaved) {
+      onPositionSaved({
+        x: Math.round(finalRect.left),
+        y: Math.round(finalRect.top)
+      });
+    }
+  }
+}

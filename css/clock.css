@@ -1,0 +1,364 @@
+/* Clock Components - 5 Distinct Styles */
+
+.clock-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--text-primary);
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+  transition: all var(--transition-normal);
+}
+
+/* =========================================
+   STYLE 1: MINIMAL CLEAN
+   Clean geometric sans-serif, balanced sizing
+   ========================================= */
+.clock-style-1 .clock-time {
+  font-size: 5.5rem;
+  font-weight: 300;
+  letter-spacing: -2px;
+  line-height: 1;
+  font-feature-settings: "tnum";
+}
+
+.clock-style-1 .clock-seconds {
+  font-size: 2rem;
+  font-weight: 300;
+  opacity: 0.7;
+  margin-left: 4px;
+}
+
+.clock-style-1 .clock-ampm {
+  font-size: 1.4rem;
+  font-weight: 400;
+  opacity: 0.8;
+  margin-left: 8px;
+  text-transform: uppercase;
+}
+
+.clock-style-1 .clock-date {
+  font-size: 1.25rem;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  color: var(--text-secondary);
+  margin-top: 10px;
+}
+
+/* =========================================
+   STYLE 2: BOLD BRUTALIST
+   High-impact heavy grotesque typography
+   ========================================= */
+.clock-style-2 .clock-time {
+  font-size: 7.5rem;
+  font-weight: 900;
+  letter-spacing: -3px;
+  line-height: 0.9;
+  text-transform: uppercase;
+  font-feature-settings: "tnum";
+  background: linear-gradient(180deg, #ffffff 40%, rgba(255, 255, 255, 0.75) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.clock-style-2 .clock-seconds {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #a5b4fc;
+  -webkit-text-fill-color: #a5b4fc;
+  margin-left: 6px;
+}
+
+.clock-style-2 .clock-ampm {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #f472b6;
+  -webkit-text-fill-color: #f472b6;
+  margin-left: 8px;
+}
+
+.clock-style-2 .clock-date {
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: var(--text-primary);
+  margin-top: 14px;
+  opacity: 0.9;
+}
+
+/* =========================================
+   STYLE 3: ELEGANT EDITORIAL SERIF
+   Luxurious classic editorial styling
+   ========================================= */
+.clock-style-3 .clock-time {
+  font-family: var(--font-serif);
+  font-size: 6.2rem;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 2px;
+  line-height: 1;
+}
+
+.clock-style-3 .clock-seconds {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-style: normal;
+  opacity: 0.75;
+  margin-left: 6px;
+}
+
+.clock-style-3 .clock-ampm {
+  font-family: var(--font-family);
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  opacity: 0.8;
+  margin-left: 10px;
+}
+
+.clock-style-3 .clock-date {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  letter-spacing: 1.5px;
+  font-weight: 400;
+  color: #fef08a; /* Soft gold tint */
+  margin-top: 12px;
+}
+
+/* =========================================
+   STYLE 4: COMPACT PILL
+   Minimalist horizontal glass badge
+   ========================================= */
+.clock-style-4 {
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 9999px;
+  padding: 12px 28px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.clock-style-4 .clock-pill-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.clock-style-4 .clock-time {
+  font-size: 2.8rem;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  line-height: 1;
+}
+
+.clock-style-4 .clock-seconds {
+  font-size: 1.4rem;
+  font-weight: 500;
+  opacity: 0.7;
+}
+
+.clock-style-4 .clock-ampm {
+  font-size: 1rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 3px 7px;
+  border-radius: 6px;
+}
+
+.clock-style-4 .clock-date {
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+
+/* =========================================
+   STYLE 5: MODERN SPLIT STACK
+   High-tech split numbers with glowing accents
+   ========================================= */
+.clock-style-5 .clock-modern-split {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.clock-style-5 .clock-split-digits {
+  display: flex;
+  align-items: center;
+  font-size: 7rem;
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -2px;
+  background: linear-gradient(135deg, #ffffff 30%, #38bdf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.clock-style-5 .clock-split-colon {
+  margin: 0 4px;
+  animation: blinkColon 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  color: #38bdf8;
+  -webkit-text-fill-color: #38bdf8;
+}
+
+@keyframes blinkColon {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.clock-style-5 .clock-split-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.clock-style-5 .clock-seconds {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #38bdf8;
+}
+
+.clock-style-5 .clock-ampm {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+}
+
+.clock-style-5 .clock-date {
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: #94a3b8;
+  margin-top: 14px;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 4px 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* =========================================
+   STYLE 6: VINTAGE ROUND DIAL CLOCK
+   Classic horology aesthetic with Roman numerals,
+   ornate hands, brushed gold bezel, and subdial
+   ========================================= */
+.clock-style-6 .vintage-clock-dial {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  padding: 8px;
+  background: radial-gradient(circle, #2d261e 0%, #15110d 85%, #3c2f1f 100%);
+  border: 4px solid #b89758;
+  box-shadow: 
+    0 12px 35px rgba(0, 0, 0, 0.7),
+    inset 0 0 15px rgba(0, 0, 0, 0.9),
+    0 0 0 2px rgba(255, 255, 255, 0.15);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.clock-style-6 .vintage-dial-face {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  position: relative;
+  border: 1px dashed rgba(184, 151, 88, 0.4);
+}
+
+.clock-style-6 .vintage-numeral {
+  position: absolute;
+  font-family: var(--font-serif);
+  font-size: 16px;
+  font-weight: 700;
+  color: #d4af37;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  letter-spacing: 1px;
+}
+
+.clock-style-6 .num-12 { top: 6px; left: 50%; transform: translateX(-50%); }
+.clock-style-6 .num-3  { right: 10px; top: 50%; transform: translateY(-50%); }
+.clock-style-6 .num-6  { bottom: 6px; left: 50%; transform: translateX(-50%); }
+.clock-style-6 .num-9  { left: 10px; top: 50%; transform: translateY(-50%); }
+
+.clock-style-6 .vintage-dial-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 36px;
+  pointer-events: none;
+}
+
+.clock-style-6 .vintage-brand {
+  font-family: var(--font-serif);
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: rgba(212, 175, 55, 0.7);
+  text-transform: uppercase;
+}
+
+.clock-style-6 .vintage-date-subdial {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  color: #fef08a;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(184, 151, 88, 0.35);
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+/* Hands */
+.clock-style-6 .vintage-hand {
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  transform-origin: 50% 100%;
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+.clock-style-6 .vintage-hand-hour {
+  width: 4px;
+  height: 52px;
+  background: linear-gradient(180deg, #d4af37, #996515);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+  z-index: 2;
+}
+
+.clock-style-6 .vintage-hand-min {
+  width: 3px;
+  height: 72px;
+  background: linear-gradient(180deg, #fef08a, #c5a059);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+  z-index: 3;
+}
+
+.clock-style-6 .vintage-hand-sec {
+  width: 1.5px;
+  height: 80px;
+  background: #ef4444;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
+  z-index: 4;
+}
+
+.clock-style-6 .vintage-center-pin {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #fef08a;
+  border: 2px solid #3c2f1f;
+  z-index: 5;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+}

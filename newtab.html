@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Tab</title>
+  <link rel="stylesheet" href="newtab.css">
+</head>
+<body>
+  <!-- Wallpaper Full-Screen Canvas & Shading Overlay -->
+  <div id="wallpaper-background"></div>
+  <div id="wallpaper-overlay"></div>
+
+  <!-- ON-SCREEN DRAGGABLE WIDGET 1: TASKS / TODO -->
+  <div id="screen-todo-widget" class="screen-widget glass-panel" style="display: none;">
+    <div class="widget-header">
+      <div class="widget-title-group">
+        <span class="widget-drag-handle">⠿</span>
+        <span>Tasks</span>
+        <span class="badge-count todo-counter-badge" style="display: none;">0</span>
+      </div>
+      <div class="widget-controls">
+        <button class="widget-btn widget-close-btn" title="Hide widget from screen">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="widget-body">
+      <div class="todo-panel-container">
+        <form class="todo-form-instance todo-add-box">
+          <input type="text" class="todo-input" placeholder="Add a task..." autocomplete="off" />
+          <button type="submit" class="glass-button btn-primary todo-add-btn">Add</button>
+        </form>
+        <div class="todo-list-wrapper" style="max-height: 200px;">
+          <ul class="todo-list-instance todo-list"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ON-SCREEN DRAGGABLE WIDGET 2: NOTES SCRATCHPAD -->
+  <div id="screen-notes-widget" class="screen-widget glass-panel" style="display: none;">
+    <div class="widget-header">
+      <div class="widget-title-group">
+        <span class="widget-drag-handle">⠿</span>
+        <span>Notes</span>
+      </div>
+      <div class="widget-controls">
+        <button class="widget-btn widget-close-btn" title="Hide widget from screen">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="widget-body">
+      <div class="notes-panel-container">
+        <textarea class="notes-textarea-instance notes-textarea" placeholder="Jot down quick thoughts..."></textarea>
+        <div class="notes-footer">
+          <span class="notes-char-count-instance">0w · 0c</span>
+          <span class="notes-status-instance notes-status" style="opacity: 0;">Saved</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Interactive Viewport -->
+  <main class="dashboard-viewport">
+    <!-- Top Bar with Weather widget on left, Quick Action buttons on right -->
+    <header class="dashboard-header">
+      <!-- Weather element (clickable pill that lets user set any city) -->
+      <div id="weather-widget" class="weather-wrapper" aria-label="Current Weather"></div>
+
+      <!-- Right Side Quick-Access App Triggers -->
+      <div class="header-actions">
+        <!-- Toggle on-screen tasks button -->
+        <button id="trigger-todo-btn" class="glass-button" title="Open or toggle Tasks on screen">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 11l3 3L22 4"></path>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+          </svg>
+          <span>Tasks</span>
+          <span class="badge-count todo-counter-badge" style="display: none;">0</span>
+        </button>
+
+        <!-- Toggle on-screen notes button -->
+        <button id="trigger-notes-btn" class="glass-button" title="Open or toggle Notes on screen">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          <span>Notes</span>
+        </button>
+
+        <!-- Customize drawer trigger -->
+        <button id="customize-toggle-btn" class="glass-button" title="Customize Dashboard">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+          <span>Customize</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Center Stage: Clock, Search Bar, Shortcuts -->
+    <div class="dashboard-center">
+      <!-- 1. Live Clock & Date Component (Supports 6 styles including Old Vintage) -->
+      <section id="clock-container" aria-label="Clock and Date" class="clock-wrapper"></section>
+
+      <!-- 2. Search Component -->
+      <section id="search-container" class="search-wrapper" aria-label="Web Search">
+        <div class="search-box">
+          <div class="search-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </div>
+          <input 
+            type="text" 
+            id="search-input" 
+            class="search-input" 
+            placeholder="Search the web or type a URL..." 
+            autocomplete="off" 
+            spellcheck="false"
+            aria-label="Search"
+          />
+          <button id="search-clear-btn" class="search-clear-btn" title="Clear input" aria-label="Clear Search">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+          <span class="search-hint">/</span>
+        </div>
+      </section>
+
+      <!-- 3. Shortcuts Component -->
+      <section id="shortcuts-container" class="shortcuts-wrapper" aria-label="Favorite Shortcuts">
+        <div id="shortcuts-list" class="shortcuts-grid"></div>
+      </section>
+    </div>
+
+    <!-- Empty Footer spacer for balanced layout -->
+    <footer class="dashboard-footer"></footer>
+  </main>
+
+  <!-- Add / Edit Shortcut Modal -->
+  <div id="shortcut-modal" class="modal-overlay">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h3 id="shortcut-modal-heading">Add Shortcut</h3>
+      </div>
+      <form id="shortcut-form">
+        <div class="form-group">
+          <label for="shortcut-modal-title">Name</label>
+          <input type="text" id="shortcut-modal-title" class="form-input" placeholder="e.g. GitHub" required />
+        </div>
+        <div class="form-group">
+          <label for="shortcut-modal-url">URL</label>
+          <input type="text" id="shortcut-modal-url" class="form-input" placeholder="e.g. https://github.com" required />
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="shortcut-modal-cancel" class="glass-button btn-secondary">Cancel</button>
+          <button type="submit" class="glass-button btn-primary">Save Shortcut</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Right-Side Sliding Panel with Separate Pages -->
+  <div id="customize-backdrop"></div>
+  <aside id="customize-drawer" aria-label="App & Customize Drawer">
+    <div class="drawer-header">
+      <div class="drawer-title">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7"></rect>
+          <rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect>
+          <rect x="3" y="14" width="7" height="7"></rect>
+        </svg>
+        <span id="drawer-main-title">Dashboard</span>
+      </div>
+      <button id="customize-close-btn" class="drawer-close-btn" title="Close Drawer" aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Non-sliding, wrapping navbar with separate distinct pages -->
+    <nav class="drawer-nav">
+      <button class="drawer-nav-tab active" data-target="page-wallpaper">Wallpaper</button>
+      <button class="drawer-nav-tab" data-target="page-clock">Clock</button>
+      <button class="drawer-nav-tab" data-target="page-weather">Weather</button>
+      <button class="drawer-nav-tab" data-target="page-tasks">Tasks</button>
+      <button class="drawer-nav-tab" data-target="page-notes">Notes</button>
+      <button class="drawer-nav-tab" data-target="page-search">Search</button>
+      <button class="drawer-nav-tab" data-target="page-shortcuts">Shortcuts</button>
+      <button class="drawer-nav-tab" data-target="page-appearance">Appearance</button>
+    </nav>
+
+    <!-- Drawer Content Pages -->
+    <div class="drawer-content">
+
+      <!-- PAGE: WALLPAPER -->
+      <section id="page-wallpaper" class="drawer-section active">
+        <div class="section-header">
+          <h4 class="section-title">Background Wallpaper</h4>
+        </div>
+
+        <div class="wallpaper-grid">
+          <div class="wallpaper-thumb-option" data-path="assets/wallpapers/wallpaper1.jpg" style="background-image: url('assets/wallpapers/wallpaper1.jpg')" title="Aurora Night"></div>
+          <div class="wallpaper-thumb-option" data-path="assets/wallpapers/wallpaper2.jpg" style="background-image: url('assets/wallpapers/wallpaper2.jpg')" title="Golden Sunset"></div>
+          <div class="wallpaper-thumb-option" data-path="assets/wallpapers/wallpaper3.jpg" style="background-image: url('assets/wallpapers/wallpaper3.jpg')" title="Neon Cyber"></div>
+          <div class="wallpaper-thumb-option" data-path="assets/wallpapers/wallpaper4.jpg" style="background-image: url('assets/wallpapers/wallpaper4.jpg')" title="Midnight Minimal"></div>
+          <div class="wallpaper-thumb-option" data-path="assets/wallpapers/wallpaper5.jpg" style="background-image: url('assets/wallpapers/wallpaper5.jpg')" title="Emerald Glow"></div>
+        </div>
+
+        <input type="file" id="wallpaper-file-input" accept="image/*" style="display: none;" />
+
+        <div class="wallpaper-actions">
+          <button id="btn-upload-wallpaper" class="glass-button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+            Upload Image
+          </button>
+          <button id="btn-reset-wallpaper" class="glass-button btn-secondary" title="Reset to default">Reset</button>
+        </div>
+
+        <div id="custom-wallpaper-status" class="custom-status-pill">Custom Wallpaper Active</div>
+
+        <div class="slider-group">
+          <div class="slider-header">
+            <span>Dark Overlay Opacity</span>
+            <span id="val-overlay-opacity" class="slider-value-badge">35%</span>
+          </div>
+          <input type="range" id="setting-overlay-opacity" class="range-slider" min="0" max="90" step="5" value="35">
+        </div>
+
+        <div class="slider-group">
+          <div class="slider-header">
+            <span>Wallpaper Blur</span>
+            <span id="val-wallpaper-blur" class="slider-value-badge">0px</span>
+          </div>
+          <input type="range" id="setting-wallpaper-blur" class="range-slider" min="0" max="30" step="2" value="0">
+        </div>
+      </section>
+
+      <!-- PAGE: CLOCK -->
+      <section id="page-clock" class="drawer-section">
+        <div class="section-header">
+          <h4 class="section-title">Clock & Date Styles</h4>
+        </div>
+
+        <div class="control-row">
+          <div class="control-label">
+            <span class="control-title">Enable Clock</span>
+            <span class="control-description">Show or hide the main time display</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="setting-clock-enabled" checked>
+            <span class="switch-slider"></span>
+          </label>
+        </div>
+
+        <div class="clock-style-grid">
+          <div class="clock-style-option" data-style="1">
+            <div class="clock-style-info">
+              <span class="clock-style-name">1. Minimalist Clean</span>
+              <span class="clock-style-desc">Clean sans-serif with balanced date</span>
+            </div>
+            <span class="clock-style-preview">10:42</span>
+          </div>
+
+          <div class="clock-style-option" data-style="2">
+            <div class="clock-style-info">
+              <span class="clock-style-name">2. Bold Brutalist</span>
+              <span class="clock-style-desc">Heavy uppercase high-impact numerals</span>
+            </div>
+            <span class="clock-style-preview">10:42</span>
+          </div>
+
+          <div class="clock-style-option" data-style="3">
+            <div class="clock-style-info">
+              <span class="clock-style-name">3. Elegant Editorial</span>
+              <span class="clock-style-desc">Luxurious serif italics with warm gold</span>
+            </div>
+            <span class="clock-style-preview">10:42 PM</span>
+          </div>
+
+          <div class="clock-style-option" data-style="4">
+            <div class="clock-style-info">
+              <span class="clock-style-name">4. Compact Glass Pill</span>
+              <span class="clock-style-desc">Horizontal all-in-one frosted pill badge</span>
+            </div>
+            <span class="clock-style-preview">[ 10:42 ]</span>
+          </div>
+
+          <div class="clock-style-option" data-style="5">
+            <div class="clock-style-info">
+              <span class="clock-style-name">5. Modern Split Stack</span>
+              <span class="clock-style-desc">High-tech dual gradient numbers</span>
+            </div>
+            <span class="clock-style-preview">10 : 42</span>
+          </div>
+
+          <!-- Style 6: Old Vintage Round Dial -->
+          <div class="clock-style-option" data-style="6">
+            <div class="clock-style-info">
+              <span class="clock-style-name">6. Old Vintage Round Clock 🕰️</span>
+              <span class="clock-style-desc">Classic horology with Roman dial & hands</span>
+            </div>
+            <span class="clock-style-preview">XII / VI</span>
+          </div>
+        </div>
+
+        <div class="control-row">
+          <div class="control-label">
+            <span class="control-title">Time Format</span>
+          </div>
+          <select id="setting-clock-format" class="select-input">
+            <option value="12h">12-Hour (AM/PM)</option>
+            <option value="24h">24-Hour</option>
+          </select>
+        </div>
+
+        <div class="control-row">
+          <div class="control-label">
+            <span class="control-title">Show Seconds</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="setting-clock-seconds">
+            <span class="switch-slider"></span>
+          </label>
+        </div>
+
+        <div class="control-row">
+          <div class="control-label">
+            <span class="control-title">Show Date</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="setting-clock-date" checked>
+            <span class="switch-slider"></span>
+          </label>
+        </div>
+      </section>
+
+      <!-- PAGE: WEATHER (Configure City) -->
+      <section id="page-weather" class="drawer-section">
+        <div class="section-header">
+          <h4 class="section-title">Weather Settings</h4>
+        </div>
+
+        <div class="control-row">
+          <div class="control-label">
+            <span class="control-title">Enable Weather Widget</span>
+            <span class="control-description">Show temperature and conditions</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="setting-weather-enabled" checked>
+            <span class="switch-slider"></span>
+          </label>
+        </div>
+
+        <div class="form-group" style="margin-top: 8px;">
+          <label for="setting-weather-city-input">Custom City / Location</label>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="setting-weather-city-input" class="form-input" placeholder="e.g. London, Tokyo, New York" />
+            <button id="btn-save-weather-city" class="glass-button btn-primary" style="padding: 0 14px;">Save</button>
+          </div>
+          <span style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Leave empty to auto-detect your city via IP geolocation.</span>
+        </div>
+
+        <div class="control-row" style="margin-top: 8px;">
+          <div class="control-label">
+            <span class="control-title">Temperature Unit</span>
+          </div>
+          <select id="setting-weather-unit" class="select-input">
+            <option value="celsius">Celsius (°C)</option>
+            <option value="fahrenheit">Fahrenheit (°F)</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- PAGE: TASKS / TODO -->
+      <section id="page-tasks" class="drawer-section">
+        <div class="section-header">
+          <h4 class="section-title">My Tasks</h4>
+          <div style="display: flex; gap: 6px;">
+            <button id="btn-toggle-screen-todo" class="glass-button" style="padding: 4px 10px; font-size: 11px;">Toggle On-Screen</button>
+            <button class="todo-clear-completed-btn glass-button" style="padding: 4px 10px; font-size: 11px;">Clear Done</button>
+          </div>
+        </div>
+
+        <div class="todo-panel-container">
+          <form class="todo-form-instance todo-add-box">
+            <input type="text" class="todo-input" placeholder="What needs to be done?" autocomplete="off" />
+            <button type="submit" class="glass-button btn-primary todo-add-btn">Add</button>
+          </form>
+
+          <div class="todo-list-wrapper">
+            <ul class="todo-list-instance todo-list"></ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- PAGE: NOTES -->
+      <section id="page-notes" class="drawer-section">
+        <div class="section-header">
+          <h4 class="section-title">Scratchpad Notes</h4>
+          <div style="display: flex; gap: 6px; align-items: center;">
+            <span class="notes-status-instance notes-status" style="opacity: 0; font-size: 11px;">Saved</span>
+            <button id="btn-toggle-screen-notes" class="glass-button" style="padding: 4px 10px; font-size: 11px;">Toggle On-Screen</button>
+          </div>
+        </div>
+
+        <div class="notes-panel-container">
+          <textarea class="notes-textarea-instance notes-textarea" placeholder="Jot down quick thoughts, links, and code snippets..."></textarea>
+          <div class="notes-footer">
+            <span class="notes-char-count-instance">0w · 0c</span>
+            <button class="notes-clear-btn-instance glass-button" style="padding: 4px 10px; font-size: 11px; color: #fca5a5;">Clear</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- PAGE: SEARCH -->
+      <section id="page-search" class="drawer-section">
+        <div class="section-header">
+          <h4 class="section-title">Search Settings</h4>
+        </div>
+
+        <div class="control-row">
+          <div class="control-label">
+            <span class="control-title">Show Search Bar</span>
+            <span class="control-description">Quick search trigger using Google</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="setting-search-enabled" checked>
+            <span class="switch-slider"></span>
+          </label>
+        </div>
+      </section>
+
+      <!-- PAGE: SHORTCUTS -->
+      <section id="page-shortcuts" class="drawer-section">
+        <div class="section-header">
+          <h4 class="section-title">Shortcuts Settings</h4>
+        </div>
+
+        <div class="control-row">
+          <div class="control-label">
+            <span class="control-title">Show Shortcuts Grid</span>
+            <span class="control-description">Display favorite quick links on page</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="setting-shortcuts-enabled" checked>
+            <span class="switch-slider"></span>
+          </label>
+        </div>
+      </section>
+
+      <!-- PAGE: APPEARANCE -->
+      <section id="page-appearance" class="drawer-section">
+        <div class="section-header">
+          <h4 class="section-title">Glassmorphism Appearance</h4>
+        </div>
+
+        <div class="slider-group">
+          <div class="slider-header">
+            <span>Glass Opacity</span>
+            <span id="val-glass-opacity" class="slider-value-badge">12%</span>
+          </div>
+          <input type="range" id="setting-glass-opacity" class="range-slider" min="4" max="40" step="2" value="12">
+        </div>
+
+        <div class="slider-group">
+          <div class="slider-header">
+            <span>Glass Blur Filter</span>
+            <span id="val-glass-blur" class="slider-value-badge">16px</span>
+          </div>
+          <input type="range" id="setting-glass-blur" class="range-slider" min="4" max="40" step="2" value="16">
+        </div>
+
+        <!-- Cross Device Sync Info Box -->
+        <div class="sync-info-box">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+          </svg>
+          <p>
+            <strong>Account Sync Active</strong><br>
+            Tasks, Notes, Clock styles, and preferences sync seamlessly when logged into Chrome on other devices with your email.
+          </p>
+        </div>
+
+        <div style="margin-top: 14px;">
+          <button id="btn-reset-all-settings" class="glass-button" style="width: 100%; justify-content: center; color: #fca5a5;">
+            Reset All Settings to Defaults
+          </button>
+        </div>
+      </section>
+
+    </div>
+  </aside>
+
+  <!-- Scripts -->
+  <script src="js/storage.js"></script>
+  <script src="js/draggable.js"></script>
+  <script src="js/wallpaper.js"></script>
+  <script src="js/clock.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/shortcuts.js"></script>
+  <script src="js/weather.js"></script>
+  <script src="js/todo.js"></script>
+  <script src="js/notes.js"></script>
+  <script src="js/customize.js"></script>
+  <script src="newtab.js"></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+/* Search Bar Component */
+
+.search-wrapper {
+  width: 100%;
+  max-width: 640px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  transition: transform var(--transition-normal);
+}
+
+.search-box {
+  width: 100%;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  gap: 14px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: 27px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  transition: all var(--transition-normal);
+}
+
+.search-box:hover {
+  background: rgba(255, 255, 255, calc(var(--glass-opacity) + 0.05));
+  border-color: var(--glass-border-hover);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+}
+
+.search-box:focus-within {
+  background: rgba(255, 255, 255, calc(var(--glass-opacity) + 0.08));
+  border-color: rgba(255, 255, 255, 0.45);
+  box-shadow: 0 14px 42px rgba(0, 0, 0, 0.45), 0 0 0 3px rgba(99, 102, 241, 0.25);
+  transform: translateY(-2px);
+}
+
+.search-icon {
+  color: var(--text-secondary);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: inherit;
+  font-size: 16px;
+  color: var(--text-primary);
+  letter-spacing: 0.2px;
+}
+
+.search-input::placeholder {
+  color: var(--text-muted);
+}
+
+.search-clear-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: all var(--transition-fast);
+}
+
+.search-clear-btn:hover {
+  background: rgba(255, 255, 255, 0.28);
+  color: #ffffff;
+}
+
+.search-hint {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  padding: 2px 7px;
+  letter-spacing: 0.5px;
+}

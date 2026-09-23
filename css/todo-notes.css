@@ -1,0 +1,312 @@
+/* Todo & Notes Drawer Page Components */
+
+/* Todo Page */
+.todo-panel-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 16px;
+}
+
+.todo-add-box {
+  display: flex;
+  gap: 8px;
+}
+
+.todo-input {
+  flex: 1;
+  padding: 10px 14px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 12px;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+  transition: all var(--transition-fast);
+}
+
+.todo-input:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.25);
+}
+
+.todo-add-btn {
+  padding: 0 16px;
+  height: 42px;
+}
+
+.todo-list-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.todo-list-wrapper::-webkit-scrollbar {
+  width: 5px;
+}
+
+.todo-list-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+
+.todo-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all var(--transition-fast);
+}
+
+.todo-item:hover {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.todo-item-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  flex: 1;
+}
+
+.todo-checkbox {
+  display: none;
+}
+
+.todo-item-check-custom {
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.todo-checkbox:checked + .todo-item-check-custom {
+  background: var(--accent-color);
+  border-color: var(--accent-color);
+}
+
+.todo-checkbox:checked + .todo-item-check-custom::after {
+  content: "✓";
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.todo-item-text {
+  font-size: 13.5px;
+  color: var(--text-primary);
+  line-height: 1.3;
+  transition: all var(--transition-fast);
+  word-break: break-word;
+}
+
+.todo-item.completed .todo-item-text {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.todo-delete-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  opacity: 0;
+  transition: all var(--transition-fast);
+}
+
+.todo-item:hover .todo-delete-btn {
+  opacity: 1;
+}
+
+.todo-delete-btn:hover {
+  color: var(--danger-color);
+}
+
+.todo-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 16px;
+  text-align: center;
+  color: var(--text-muted);
+  gap: 12px;
+}
+
+.todo-empty-state svg {
+  opacity: 0.5;
+}
+
+.todo-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.badge-count {
+  font-size: 11px;
+  background: var(--accent-color);
+  color: #fff;
+  border-radius: 10px;
+  padding: 1px 6px;
+  font-weight: 700;
+}
+
+/* Notes Page */
+.notes-panel-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 12px;
+}
+
+.notes-textarea {
+  width: 100%;
+  height: 380px;
+  padding: 16px;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 14.5px;
+  line-height: 1.6;
+  resize: none;
+  outline: none;
+  transition: border-color var(--transition-fast);
+}
+
+.notes-textarea:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.25);
+}
+
+.notes-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.notes-status {
+  color: #34d399;
+  transition: opacity var(--transition-fast);
+}
+
+/* =========================================
+   ON-SCREEN DRAGGABLE WIDGETS
+   ========================================= */
+.screen-widget {
+  position: fixed;
+  z-index: 10;
+  width: 320px;
+  max-width: 90vw;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+  transition: box-shadow var(--transition-fast), border-color var(--transition-fast);
+  user-select: none;
+}
+
+.screen-widget.dragging {
+  opacity: 0.92;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65);
+  cursor: grabbing !important;
+}
+
+.widget-header {
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  cursor: grab;
+}
+
+.widget-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.widget-drag-handle {
+  opacity: 0.6;
+}
+
+.widget-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.widget-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.widget-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+}
+
+.widget-body {
+  padding: 14px;
+  max-height: 380px;
+  overflow-y: auto;
+  user-select: auto;
+}
+
+.screen-widget .notes-textarea {
+  height: 180px;
+  font-size: 13.5px;
+}
+
+.screen-widget .todo-panel-container {
+  gap: 10px;
+}
+
+.screen-widget .todo-input {
+  padding: 8px 12px;
+  font-size: 13px;
+}
+
+.screen-widget .todo-add-btn {
+  height: 36px;
+  padding: 0 12px;
+  font-size: 13px;
+}
