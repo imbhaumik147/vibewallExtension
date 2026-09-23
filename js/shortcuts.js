@@ -48,7 +48,7 @@ const ShortcutsManager = {
       const faviconUrl = `https://www.google.com/s2/favicons?domain=${encodeURIComponent(domain)}&sz=64`;
 
       card.innerHTML = `
-        <a href="${this.escapeHtml(item.url)}" class="shortcut-link" target="_self">
+        <a href="${this.escapeHtml(item.url)}" class="shortcut-link" target="_self" rel="noopener noreferrer">
           <div class="shortcut-icon-wrapper">
             <img class="shortcut-icon" src="${faviconUrl}" alt="${this.escapeHtml(item.title)}" loading="lazy" />
           </div>
@@ -80,6 +80,16 @@ const ShortcutsManager = {
         img.parentNode.appendChild(fallback);
       };
 
+      // Card click fallback navigation
+      card.addEventListener('click', (e) => {
+        // If clicking action buttons, do nothing
+        if (e.target.closest('.shortcut-actions')) return;
+        // Navigate
+        if (item.url) {
+          window.location.href = item.url;
+        }
+      });
+
       // Edit click handler
       card.querySelector('.edit-btn').addEventListener('click', (e) => {
         e.preventDefault();
@@ -98,9 +108,11 @@ const ShortcutsManager = {
     });
 
     // Add Shortcut Button card
-    const addCard = document.createElement('button');
+    const addCard = document.createElement('div');
     addCard.className = 'shortcut-card add-shortcut-card glass-panel';
     addCard.title = 'Add new shortcut';
+    addCard.role = 'button';
+    addCard.tabIndex = 0;
     addCard.innerHTML = `
       <div class="shortcut-icon-wrapper add-icon-wrapper">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -111,7 +123,16 @@ const ShortcutsManager = {
       <span class="shortcut-title">Add</span>
     `;
     addCard.addEventListener('click', () => this.openModal(null));
+    addCard.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        this.openModal(null);
+      }
+    });
     this.listEl.appendChild(addCard);
+
+    // Also re-render drawer shortcut list if present
+    this.renderDrawerList();
   },
 
   openModal(item) {
@@ -209,6 +230,79 @@ const ShortcutsManager = {
       if (e.key === 'Escape' && this.modalEl.classList.contains('open')) {
         this.closeModal();
       }
+    });
+
+    // Drawer Add Shortcut Button
+    const drawerAddBtn = document.getElementById('btn-drawer-add-shortcut');
+    if (drawerAddBtn) {
+      drawerAddBtn.addEventListener('click', () => this.openModal(null));
+    }
+  },
+
+  renderDrawerList() {
+    const drawerListEl = document.getElementById('drawer-shortcuts-list');
+    if (!drawerListEl || !this.config) return;
+
+    const items = this.config.items || [];
+    drawerListEl.innerHTML = '';
+
+    if (items.length === 0) {
+      drawerListEl.innerHTML = '<li style="color: var(--text-muted); font-size: 13px; text-align: center; padding: 12px;">No shortcuts added yet.</li>';
+      return;
+    }
+
+    items.forEach((item) => {
+      const li = document.createElement('li');
+      li.className = 'drawer-shortcut-item';
+
+      const domain = this.extractDomain(item.url);
+      const faviconUrl = `https://www.google.com/s2/favicons?domain=${encodeURIComponent(domain)}&sz=32`;
+
+      li.innerHTML = `
+        <div class="drawer-shortcut-info">
+          <img class="drawer-shortcut-icon" src="${faviconUrl}" alt="" loading="lazy" />
+          <div class="drawer-shortcut-texts">
+            <span class="drawer-shortcut-title">${this.escapeHtml(item.title)}</span>
+            <span class="drawer-shortcut-url">${this.escapeHtml(item.url)}</span>
+          </div>
+        </div>
+        <div class="drawer-shortcut-actions">
+          <button class="shortcut-action-btn edit-btn" title="Edit Shortcut">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+            </svg>
+          </button>
+          <button class="shortcut-action-btn delete-btn" title="Delete Shortcut">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+      `;
+
+      // Fallback for drawer favicon
+      const img = li.querySelector('.drawer-shortcut-icon');
+      img.onerror = () => {
+        img.style.display = 'none';
+      };
+
+      // Edit click handler
+      li.querySelector('.edit-btn').addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        this.openModal(item);
+      });
+
+      // Delete click handler
+      li.querySelector('.delete-btn').addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        this.deleteShortcut(item.id);
+      });
+
+      drawerListEl.appendChild(li);
     });
   },
 

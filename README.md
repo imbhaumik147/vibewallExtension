@@ -104,43 +104,44 @@ vibewallExtension/
 
 ---
 
-## 🛠️ Installation & Testing in Google Chrome
+## 🛠️ Installation & Getting Started
 
-No build tools or compilers (Node, Webpack, etc.) are needed! VibeWall runs on standard browser web technologies.
+VibeWall is 100% vanilla web technologies (HTML5, CSS3, ES6+ JavaScript) and requires no build steps or dependencies.
 
-1. Open **Google Chrome**.
-2. Navigate to the extensions manager:
+1. **Clone or Download** this repository to your machine:
+   ```bash
+   git clone https://github.com/imbhaumik147/vibewallExtension.git
+   ```
+2. Open **Google Chrome** and navigate to:
    ```text
    chrome://extensions/
    ```
-3. In the top-right corner, toggle **Developer mode** to **ON**.
-4. In the top-left corner, click **Load unpacked**.
-5. Select this folder:
-   ```text
-   C:\BHAUMIK\test\wallpaper ext
-   ```
-6. Open a new tab (**`Ctrl + T`**) to launch **VibeWall**!
+3. Enable **Developer mode** using the toggle switch in the top-right corner.
+4. Click the **Load unpacked** button in the top-left corner.
+5. Select the cloned repository root folder (`vibewallExtension`).
+6. Open a new tab (`Ctrl + T` or `Cmd + T`) to experience **VibeWall**!
 
 ---
 
 ## ⌨️ Keyboard Shortcuts
 
-| Shortcut | Action |
+| Key | Action |
 | :--- | :--- |
-| **`/`** | Focus web search input immediately |
-| **`Enter`** | Run search query or open URL |
-| **`Escape`** | Close Customize drawer / Dismiss shortcut modal / Clear search |
+| **`/`** | Focus web search bar immediately |
+| **`Enter`** | Execute Google search or direct URL navigation |
+| **`Escape`** | Close Drawer / Dismiss Modal dialog / Clear Search query |
 
 ---
 
 ## 🔒 Privacy & Permissions
 
-* **Minimal Permissions**: VibeWall only requests the `"storage"` permission to save your preferences and sync across your devices.
-* **No Background Trackers**: No third-party tracking scripts, analytics, or external ads.
-* **Completely Works Offline**: Clock, Wallpapers, Tasks, Notes, and Shortcuts function without an internet connection.
+* **Local-First & Private**: Your tasks, notes, shortcuts, and settings stay in your browser.
+* **Minimal Permissions**: Only requests the standard `"storage"` permission to synchronize preferences across your devices via Chrome profile sync.
+* **Zero Trackers**: No third-party tracking, analytics, telemetry, or external ads.
+* **Offline Ready**: Clock, custom wallpapers, notes, tasks, and shortcuts function completely offline.
 
 ---
 
 ## 📄 License
 
-MIT License. Free to use, modify, and distribute.
+MIT License. Open source and free to use or modify.

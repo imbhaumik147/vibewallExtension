@@ -229,3 +229,78 @@
 .btn-primary:hover {
   background: var(--accent-hover);
 }
+
+/* Drawer Shortcut List Items */
+.drawer-shortcuts-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 280px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.drawer-shortcuts-list::-webkit-scrollbar {
+  width: 5px;
+}
+
+.drawer-shortcuts-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+
+.drawer-shortcut-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  gap: 10px;
+}
+
+.drawer-shortcut-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.drawer-shortcut-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.drawer-shortcut-texts {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.drawer-shortcut-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.drawer-shortcut-url {
+  font-size: 11px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.drawer-shortcut-actions {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}

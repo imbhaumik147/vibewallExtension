@@ -457,7 +457,8 @@
       <!-- PAGE: SHORTCUTS -->
       <section id="page-shortcuts" class="drawer-section">
         <div class="section-header">
-          <h4 class="section-title">Shortcuts Settings</h4>
+          <h4 class="section-title">Shortcuts</h4>
+          <button id="btn-drawer-add-shortcut" class="glass-button btn-primary" style="padding: 4px 10px; font-size: 11px;">+ Add Shortcut</button>
         </div>
 
         <div class="control-row">
@@ -469,6 +470,11 @@
             <input type="checkbox" id="setting-shortcuts-enabled" checked>
             <span class="switch-slider"></span>
           </label>
+        </div>
+
+        <div class="drawer-shortcuts-container" style="margin-top: 14px;">
+          <h5 style="font-size: 12px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Manage Shortcuts</h5>
+          <ul id="drawer-shortcuts-list" class="drawer-shortcuts-list"></ul>
         </div>
       </section>
 
