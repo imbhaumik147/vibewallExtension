@@ -30,15 +30,117 @@
     </div>
     <div class="widget-body">
       <div class="todo-panel-container">
+        <div class="todo-filter-bar">
+          <button type="button" class="todo-filter-btn active" data-filter="all">All</button>
+          <button type="button" class="todo-filter-btn" data-filter="task">Tasks</button>
+          <button type="button" class="todo-filter-btn" data-filter="goal">Goals 🎯</button>
+          <button type="button" class="todo-filter-btn" data-filter="completed">Done</button>
+        </div>
+
         <form class="todo-form-instance todo-add-box">
-          <input type="text" class="todo-input" placeholder="Add a task..." autocomplete="off" />
-          <button type="submit" class="glass-button btn-primary todo-add-btn">Add</button>
+          <div class="todo-form-type-row">
+            <div class="todo-type-toggle">
+              <label class="todo-type-label active" data-type="task">
+                <input type="radio" name="todo-type-screen" value="task" checked style="display:none;" /> Task
+              </label>
+              <label class="todo-type-label" data-type="goal">
+                <input type="radio" name="todo-type-screen" value="goal" style="display:none;" /> Goal 🎯
+              </label>
+            </div>
+            <button type="button" class="todo-toggle-options-btn glass-button" title="More Options">⚙️ Options</button>
+          </div>
+
+          <div class="todo-input-main-row">
+            <input type="text" class="todo-input" placeholder="Add task title..." autocomplete="off" required />
+            <button type="submit" class="glass-button btn-primary todo-add-btn">Add</button>
+          </div>
+
+          <div class="todo-options-panel" style="display: none;">
+            <!-- Fields for Standard Task -->
+            <div class="todo-task-options">
+              <div class="todo-option-field">
+                <label>Due Date</label>
+                <input type="date" class="todo-duedate-input form-input-sm" />
+              </div>
+              <div class="todo-option-field">
+                <label>Priority</label>
+                <select class="todo-priority-select select-input-sm">
+                  <option value="low">Low</option>
+                  <option value="medium" selected>Medium</option>
+                  <option value="high">High</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Fields for Goal Task -->
+            <div class="todo-goal-options" style="display: none;">
+              <div class="todo-option-field">
+                <label>Target Goal Count</label>
+                <input type="number" class="todo-target-input form-input-sm" placeholder="e.g. 100" min="1" value="100" />
+              </div>
+              <div class="todo-option-field">
+                <label>Current Count</label>
+                <input type="number" class="todo-current-input form-input-sm" placeholder="e.g. 0" min="0" value="0" />
+              </div>
+              <div class="todo-option-field">
+                <label>Target Date</label>
+                <input type="date" class="todo-goal-duedate-input form-input-sm" />
+              </div>
+            </div>
+          </div>
         </form>
-        <div class="todo-list-wrapper" style="max-height: 200px;">
+
+        <div class="todo-list-wrapper" style="max-height: 220px;">
           <ul class="todo-list-instance todo-list"></ul>
         </div>
       </div>
     </div>
+    <div class="widget-resize-handle" title="Drag to resize widget">◢</div>
+  </div>
+
+  <!-- ON-SCREEN DRAGGABLE WIDGET 2: STANDALONE GOALS TRACKER -->
+  <div id="screen-goals-widget" class="screen-widget glass-panel" style="display: none;">
+    <div class="widget-header">
+      <div class="widget-title-group">
+        <span class="widget-drag-handle">⠿</span>
+        <span>Goals 🎯</span>
+        <span class="badge-count goals-counter-badge" style="display: none;">0</span>
+      </div>
+      <div class="widget-controls">
+        <button class="widget-btn widget-close-btn" title="Hide widget from screen">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="widget-body">
+      <div class="todo-panel-container">
+        <form class="goals-form-instance todo-add-box">
+          <input type="hidden" class="goal-type-input" value="goal" />
+          <div class="todo-input-main-row">
+            <input type="text" class="todo-input goal-title-input" placeholder="Goal title (e.g. 100 Reviews)..." autocomplete="off" required />
+            <button type="submit" class="glass-button btn-primary todo-add-btn">+ Goal</button>
+          </div>
+          <div class="todo-options-panel" style="display: flex; gap: 8px; margin-top: 6px;">
+            <div class="todo-option-field">
+              <label>Target Count</label>
+              <input type="number" class="todo-target-input form-input-sm" placeholder="e.g. 100" min="1" value="100" />
+            </div>
+            <div class="todo-option-field">
+              <label>Current Count</label>
+              <input type="number" class="todo-current-input form-input-sm" placeholder="e.g. 0" min="0" value="0" />
+            </div>
+          </div>
+        </form>
+
+        <div class="todo-list-wrapper" style="max-height: 220px;">
+          <ul class="goals-list-instance todo-list"></ul>
+        </div>
+      </div>
+    </div>
+    <div class="widget-resize-handle" title="Drag to resize widget">◢</div>
   </div>
 
   <!-- ON-SCREEN DRAGGABLE WIDGET 2: NOTES SCRATCHPAD -->
@@ -49,6 +151,9 @@
         <span>Notes</span>
       </div>
       <div class="widget-controls">
+        <button class="widget-btn add-note-btn" id="btn-add-note" title="Add floating note card" style="width: auto; padding: 0 6px; font-size: 11px; gap: 3px;">
+          <span>+ Note</span>
+        </button>
         <button class="widget-btn widget-close-btn" title="Hide widget from screen">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -66,7 +171,17 @@
         </div>
       </div>
     </div>
+    <div class="widget-resize-handle" title="Drag to resize widget">◢</div>
   </div>
+
+  <!-- CONTAINER FOR INDIVIDUAL DRAGGABLE GOAL CARD WIDGETS -->
+  <div id="floating-goals-container"></div>
+
+  <!-- CONTAINER FOR INDIVIDUAL DRAGGABLE TASK CARD WIDGETS -->
+  <div id="floating-tasks-container"></div>
+
+  <!-- CONTAINER FOR INDIVIDUAL DRAGGABLE NOTE CARD WIDGETS -->
+  <div id="floating-notes-container"></div>
 
   <!-- Main Interactive Viewport -->
   <main class="dashboard-viewport">
@@ -85,6 +200,13 @@
           </svg>
           <span>Tasks</span>
           <span class="badge-count todo-counter-badge" style="display: none;">0</span>
+        </button>
+
+        <!-- Toggle on-screen goals button -->
+        <button id="trigger-goals-btn" class="glass-button" title="Open or toggle Goals widget on screen">
+          <span style="font-size: 14px;">🎯</span>
+          <span>Goals</span>
+          <span class="badge-count goals-counter-badge" style="display: none;">0</span>
         </button>
 
         <!-- Toggle on-screen notes button -->
@@ -203,6 +325,7 @@
       <button class="drawer-nav-tab" data-target="page-clock">Clock</button>
       <button class="drawer-nav-tab" data-target="page-weather">Weather</button>
       <button class="drawer-nav-tab" data-target="page-tasks">Tasks</button>
+      <button class="drawer-nav-tab" data-target="page-goals">Goals 🎯</button>
       <button class="drawer-nav-tab" data-target="page-notes">Notes</button>
       <button class="drawer-nav-tab" data-target="page-search">Search</button>
       <button class="drawer-nav-tab" data-target="page-shortcuts">Shortcuts</button>
@@ -219,6 +342,7 @@
         </div>
 
         <div class="wallpaper-grid">
+          <div class="wallpaper-thumb-option" data-path="vibewall_3840x2160.png" style="background-image: url('vibewall_3840x2160.png')" title="VibeWall Collage 3840x2160"></div>
           <div class="wallpaper-thumb-option" data-path="assets/wallpapers/wallpaper1.jpg" style="background-image: url('assets/wallpapers/wallpaper1.jpg')" title="Aurora Night"></div>
           <div class="wallpaper-thumb-option" data-path="assets/wallpapers/wallpaper2.jpg" style="background-image: url('assets/wallpapers/wallpaper2.jpg')" title="Golden Sunset"></div>
           <div class="wallpaper-thumb-option" data-path="assets/wallpapers/wallpaper3.jpg" style="background-image: url('assets/wallpapers/wallpaper3.jpg')" title="Neon Cyber"></div>
@@ -256,6 +380,19 @@
             <span id="val-wallpaper-blur" class="slider-value-badge">0px</span>
           </div>
           <input type="range" id="setting-wallpaper-blur" class="range-slider" min="0" max="30" step="2" value="0">
+        </div>
+
+        <div class="control-row" style="margin-top: 12px;">
+          <div class="control-label">
+            <span class="control-title">Wallpaper Fit Mode</span>
+            <span class="control-description">Auto-adjust background dimensions</span>
+          </div>
+          <select id="setting-wallpaper-fit" class="select-input">
+            <option value="stretch" selected>Auto-Fit Entire Screen (100% 100% - No Clipping)</option>
+            <option value="cover">Cover (Crop Edges)</option>
+            <option value="contain">Contain (Fit Aspect Ratio)</option>
+            <option value="center">Center / Original</option>
+          </select>
         </div>
       </section>
 
@@ -406,13 +543,102 @@
         </div>
 
         <div class="todo-panel-container">
+          <div class="todo-filter-bar">
+            <button type="button" class="todo-filter-btn active" data-filter="all">All</button>
+            <button type="button" class="todo-filter-btn" data-filter="task">Tasks</button>
+            <button type="button" class="todo-filter-btn" data-filter="goal">Goals 🎯</button>
+            <button type="button" class="todo-filter-btn" data-filter="completed">Done</button>
+          </div>
+
           <form class="todo-form-instance todo-add-box">
-            <input type="text" class="todo-input" placeholder="What needs to be done?" autocomplete="off" />
-            <button type="submit" class="glass-button btn-primary todo-add-btn">Add</button>
+            <div class="todo-form-type-row">
+              <div class="todo-type-toggle">
+                <label class="todo-type-label active" data-type="task">
+                  <input type="radio" name="todo-type-drawer" value="task" checked style="display:none;" /> Task
+                </label>
+                <label class="todo-type-label" data-type="goal">
+                  <input type="radio" name="todo-type-drawer" value="goal" style="display:none;" /> Goal 🎯
+                </label>
+              </div>
+              <button type="button" class="todo-toggle-options-btn glass-button" title="More Options">⚙️ Options</button>
+            </div>
+
+            <div class="todo-input-main-row">
+              <input type="text" class="todo-input" placeholder="Add task title..." autocomplete="off" required />
+              <button type="submit" class="glass-button btn-primary todo-add-btn">Add</button>
+            </div>
+
+            <div class="todo-options-panel" style="display: none;">
+              <!-- Fields for Standard Task -->
+              <div class="todo-task-options">
+                <div class="todo-option-field">
+                  <label>Due Date</label>
+                  <input type="date" class="todo-duedate-input form-input-sm" />
+                </div>
+                <div class="todo-option-field">
+                  <label>Priority</label>
+                  <select class="todo-priority-select select-input-sm">
+                    <option value="low">Low</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="high">High</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Fields for Goal Task -->
+              <div class="todo-goal-options" style="display: none;">
+                <div class="todo-option-field">
+                  <label>Target Goal Count</label>
+                  <input type="number" class="todo-target-input form-input-sm" placeholder="e.g. 100" min="1" value="100" />
+                </div>
+                <div class="todo-option-field">
+                  <label>Current Count</label>
+                  <input type="number" class="todo-current-input form-input-sm" placeholder="e.g. 0" min="0" value="0" />
+                </div>
+                <div class="todo-option-field">
+                  <label>Target Date</label>
+                  <input type="date" class="todo-goal-duedate-input form-input-sm" />
+                </div>
+              </div>
+            </div>
           </form>
 
           <div class="todo-list-wrapper">
             <ul class="todo-list-instance todo-list"></ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- PAGE: GOALS 🎯 -->
+      <section id="page-goals" class="drawer-section">
+        <div class="section-header">
+          <h4 class="section-title">Goals Tracker 🎯</h4>
+          <div style="display: flex; gap: 6px;">
+            <button id="btn-toggle-screen-goals-drawer" class="glass-button" style="padding: 4px 10px; font-size: 11px;">Toggle On-Screen</button>
+          </div>
+        </div>
+
+        <div class="todo-panel-container">
+          <form class="goals-form-instance todo-add-box">
+            <input type="hidden" class="goal-type-input" value="goal" />
+            <div class="todo-input-main-row">
+              <input type="text" class="todo-input goal-title-input" placeholder="Goal title (e.g. 100 Reviews)..." autocomplete="off" required />
+              <button type="submit" class="glass-button btn-primary todo-add-btn">+ Goal</button>
+            </div>
+            <div class="todo-options-panel" style="display: flex; gap: 8px; margin-top: 6px;">
+              <div class="todo-option-field">
+                <label>Target Count</label>
+                <input type="number" class="todo-target-input form-input-sm" placeholder="e.g. 100" min="1" value="100" />
+              </div>
+              <div class="todo-option-field">
+                <label>Current Count</label>
+                <input type="number" class="todo-current-input form-input-sm" placeholder="e.g. 0" min="0" value="0" />
+              </div>
+            </div>
+          </form>
+
+          <div class="todo-list-wrapper">
+            <ul class="goals-list-instance todo-list"></ul>
           </div>
         </div>
       </section>
@@ -423,6 +649,7 @@
           <h4 class="section-title">Scratchpad Notes</h4>
           <div style="display: flex; gap: 6px; align-items: center;">
             <span class="notes-status-instance notes-status" style="opacity: 0; font-size: 11px;">Saved</span>
+            <button id="btn-add-note-drawer" class="glass-button btn-primary" style="padding: 4px 10px; font-size: 11px;">+ Add Note</button>
             <button id="btn-toggle-screen-notes" class="glass-button" style="padding: 4px 10px; font-size: 11px;">Toggle On-Screen</button>
           </div>
         </div>

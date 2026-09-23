@@ -1,27 +1,104 @@
-/* Todo & Notes Drawer Page Components */
-
-/* Todo Page */
-.todo-panel-container {
+/* Todo & Goal Filter Bar */
+.todo-filter-bar {
   display: flex;
-  flex-direction: column;
-  height: 100%;
-  gap: 16px;
+  gap: 4px;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 4px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+.todo-filter-btn {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 11.5px;
+  font-weight: 500;
+  padding: 5px 8px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.todo-filter-btn:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.todo-filter-btn.active {
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Form Container & Type Toggles */
 .todo-add-box {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.todo-form-type-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.todo-type-toggle {
+  display: flex;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  padding: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.todo-type-label {
+  padding: 3px 10px;
+  font-size: 11.5px;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all var(--transition-fast);
+}
+
+.todo-type-label.active {
+  background: var(--accent-color);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.todo-toggle-options-btn {
+  padding: 3px 8px;
+  font-size: 11px;
+  border-radius: 6px;
+}
+
+.todo-toggle-options-btn.active {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.todo-input-main-row {
   display: flex;
   gap: 8px;
 }
 
 .todo-input {
   flex: 1;
-  padding: 10px 14px;
+  padding: 8px 12px;
   background: rgba(0, 0, 0, 0.35);
   border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 12px;
+  border-radius: 10px;
   color: #ffffff;
   font-family: inherit;
-  font-size: 14px;
+  font-size: 13px;
   outline: none;
   transition: all var(--transition-fast);
 }
@@ -32,10 +109,54 @@
 }
 
 .todo-add-btn {
-  padding: 0 16px;
-  height: 42px;
+  padding: 0 14px;
+  height: 36px;
+  font-size: 12.5px;
 }
 
+/* Expandable Options Panel */
+.todo-options-panel {
+  padding-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin-top: 4px;
+}
+
+.todo-task-options, .todo-goal-options {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.todo-option-field {
+  flex: 1;
+  min-width: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.todo-option-field label {
+  font-size: 10.5px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.form-input-sm, .select-input-sm {
+  padding: 5px 8px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 6px;
+  color: #ffffff;
+  font-size: 11.5px;
+  outline: none;
+}
+
+.select-input-sm option {
+  background: #1e1e2e;
+  color: #fff;
+}
+
+/* Todo List Item Formatting */
 .todo-list-wrapper {
   flex: 1;
   overflow-y: auto;
@@ -59,19 +180,23 @@
 }
 
 .todo-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 12px;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.11);
   transition: all var(--transition-fast);
+  overflow: hidden;
 }
 
 .todo-item:hover {
   background: rgba(255, 255, 255, 0.09);
-  border-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.todo-item-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
 }
 
 .todo-item-label {
@@ -79,6 +204,13 @@
   align-items: center;
   gap: 10px;
   cursor: pointer;
+  flex: 1;
+}
+
+.todo-text-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
   flex: 1;
 }
 
@@ -123,6 +255,190 @@
   color: var(--text-muted);
 }
 
+/* Priority & Due Date Badges */
+.todo-item-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.priority-badge {
+  font-size: 9.5px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.3px;
+}
+
+.priority-high {
+  background: rgba(239, 68, 68, 0.25);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+.priority-medium {
+  background: rgba(245, 158, 11, 0.25);
+  color: #fcd34d;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+.priority-low {
+  background: rgba(59, 130, 246, 0.25);
+  color: #93c5fd;
+  border: 1px solid rgba(59, 130, 246, 0.4);
+}
+
+.duedate-badge {
+  font-size: 10.5px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.duedate-badge.overdue {
+  background: rgba(239, 68, 68, 0.3);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.5);
+  font-weight: 600;
+}
+
+.duedate-badge.due-today {
+  background: rgba(245, 158, 11, 0.3);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.5);
+}
+
+.duedate-badge.due-soon {
+  background: rgba(59, 130, 246, 0.25);
+  color: #60a5fa;
+}
+
+.duedate-badge.due-future {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-secondary);
+}
+
+/* =========================================
+   GOAL TRACKER CARD STYLES
+   ========================================= */
+.goal-item-container {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.goal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.goal-title-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.goal-icon {
+  font-size: 14px;
+}
+
+.goal-title {
+  font-weight: 600;
+  font-size: 13.5px;
+}
+
+.goal-progress-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.goal-current-text {
+  color: #6366f1;
+  font-size: 14px;
+}
+
+.goal-pct-badge {
+  font-weight: 700;
+  font-size: 11px;
+  background: rgba(99, 102, 241, 0.2);
+  color: #a5b4fc;
+  padding: 2px 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(99, 102, 241, 0.4);
+}
+
+.todo-item.completed .goal-pct-badge {
+  background: rgba(16, 185, 129, 0.25);
+  color: #6ee7b7;
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+/* Progress Track & Animated Fill Bar */
+.goal-progress-track {
+  width: 100%;
+  height: 8px;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.goal-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #6366f1, #a855f7);
+  border-radius: 4px;
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.todo-item.completed .goal-progress-fill {
+  background: linear-gradient(90deg, #10b981, #34d399);
+}
+
+.goal-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2px;
+}
+
+.goal-action-btns {
+  display: flex;
+  gap: 4px;
+}
+
+.goal-btn {
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.goal-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.goal-btn-add {
+  background: rgba(99, 102, 241, 0.3);
+  border-color: rgba(99, 102, 241, 0.5);
+  color: #a5b4fc;
+}
+
+.goal-btn-add:hover {
+  background: rgba(99, 102, 241, 0.5);
+  color: #ffffff;
+}
+
 .todo-delete-btn {
   background: transparent;
   border: none;
@@ -130,7 +446,7 @@
   cursor: pointer;
   padding: 4px;
   border-radius: 4px;
-  opacity: 0;
+  opacity: 0.6;
   transition: all var(--transition-fast);
 }
 
@@ -140,6 +456,25 @@
 
 .todo-delete-btn:hover {
   color: var(--danger-color);
+}
+
+.todo-edit-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  opacity: 0.6;
+  transition: all var(--transition-fast);
+}
+
+.todo-item:hover .todo-edit-btn {
+  opacity: 1;
+}
+
+.todo-edit-btn:hover {
+  color: var(--accent-color);
 }
 
 .todo-empty-state {
@@ -310,3 +645,75 @@
   padding: 0 12px;
   font-size: 13px;
 }
+
+/* Resize handle for dragging widget borders/corners */
+.widget-resize-handle {
+  position: absolute;
+  right: 4px;
+  bottom: 2px;
+  width: 14px;
+  height: 14px;
+  font-size: 10px;
+  color: var(--text-muted);
+  cursor: nwse-resize;
+  user-select: none;
+  opacity: 0.5;
+  transition: opacity var(--transition-fast);
+  line-height: 1;
+}
+
+.screen-widget:hover .widget-resize-handle {
+  opacity: 1;
+}
+
+.screen-widget.resizing {
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65);
+}
+
+/* Individual Standalone Floating Goal Card Widget */
+.standalone-goal-card {
+  width: 290px;
+  min-width: 240px;
+  min-height: 135px;
+  border-radius: 16px;
+}
+
+.standalone-goal-card .goal-title-text {
+  font-weight: 600;
+  font-size: 13.5px;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 160px;
+}
+
+/* Individual Standalone Floating Task Card Widget */
+.standalone-task-card {
+  width: 280px;
+  min-width: 220px;
+  border-radius: 14px;
+}
+
+.standalone-task-card .task-title-text {
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.standalone-task-card .task-title-text.completed {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+/* Individual Standalone Floating Note Card Widget */
+.standalone-note-card {
+  width: 260px;
+  min-width: 200px;
+  min-height: 150px;
+  border-radius: 14px;
+}
+

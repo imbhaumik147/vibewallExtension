@@ -129,6 +129,11 @@ const CustomizeDrawer = {
       blurVal.textContent = `${blurSlider.value}px`;
     }
 
+    const fitSelect = document.getElementById('setting-wallpaper-fit');
+    if (fitSelect) {
+      fitSelect.value = s.wallpaper.fitMode || 'cover';
+    }
+
     this.highlightActiveWallpaperThumbnail();
 
     // Clock controls
@@ -233,6 +238,9 @@ const CustomizeDrawer = {
             const base64 = await window.WallpaperManager.processUploadedFile(file);
             this.settings.wallpaper.type = 'custom';
             this.settings.wallpaper.customData = base64;
+            this.settings.wallpaper.fitMode = 'stretch'; // Auto-fit full custom image with 0% cutting!
+            const fitSelect = document.getElementById('setting-wallpaper-fit');
+            if (fitSelect) fitSelect.value = 'stretch';
             this.highlightActiveWallpaperThumbnail();
             this.triggerUpdate();
           } catch (err) {
@@ -258,6 +266,7 @@ const CustomizeDrawer = {
       resetWallpaperBtn.addEventListener('click', async () => {
         this.settings.wallpaper.type = 'default';
         this.settings.wallpaper.value = 'assets/wallpapers/wallpaper1.jpg';
+        this.settings.wallpaper.fitMode = 'cover';
         delete this.settings.wallpaper.customData;
         await window.StorageManager.clearCustomWallpaper();
         this.highlightActiveWallpaperThumbnail();
@@ -289,6 +298,15 @@ const CustomizeDrawer = {
         window.WallpaperManager.apply(this.settings.wallpaper);
       });
       blurSlider.addEventListener('change', () => this.triggerUpdate());
+    }
+
+    const fitSelect = document.getElementById('setting-wallpaper-fit');
+    if (fitSelect) {
+      fitSelect.addEventListener('change', (e) => {
+        this.settings.wallpaper.fitMode = e.target.value;
+        window.WallpaperManager.apply(this.settings.wallpaper);
+        this.triggerUpdate();
+      });
     }
 
     // Clock Style Selection

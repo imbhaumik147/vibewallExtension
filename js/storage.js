@@ -15,6 +15,7 @@ const DEFAULT_SETTINGS = {
   wallpaper: {
     type: 'default', // 'default' or 'custom'
     value: 'assets/wallpapers/wallpaper1.jpg',
+    fitMode: 'cover', // 'cover', 'stretch', 'contain', 'center'
     overlayOpacity: 0.35,
     blur: 0
   },
@@ -57,8 +58,8 @@ const DEFAULT_SETTINGS = {
     showOnScreen: true,
     position: { x: 32, y: 100 },
     items: [
-      { id: '1', text: 'Welcome to VibeWall! 🌟', completed: false, createdAt: Date.now() },
-      { id: '2', text: 'Drag me anywhere on your screen!', completed: false, createdAt: Date.now() }
+      { id: '1', type: 'goal', text: 'Get 100 Profile Reviews', targetCount: 100, currentCount: 50, completed: false, createdAt: Date.now() },
+      { id: '2', type: 'task', text: 'Complete weekly project review', priority: 'high', completed: false, createdAt: Date.now() }
     ]
   },
   notes: {

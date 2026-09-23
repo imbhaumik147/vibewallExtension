@@ -25,12 +25,23 @@ const WallpaperManager = {
       this.overlayEl.style.backgroundColor = `rgba(0, 0, 0, ${opacity})`;
     }
 
-    // Apply blur amount
-    const blur = typeof config.blur === 'number' ? config.blur : 0;
+    // Apply background fitting mode
+    const fitMode = config.fitMode || 'stretch';
     if (this.containerEl) {
       this.containerEl.style.filter = `blur(${blur}px)`;
       // Apply scale slightly when blurred so edges don't show white fringes
       this.containerEl.style.transform = blur > 0 ? `scale(${1 + (blur * 0.005)})` : 'scale(1)';
+
+      if (fitMode === 'contain') {
+        this.containerEl.style.backgroundSize = 'contain';
+      } else if (fitMode === 'cover') {
+        this.containerEl.style.backgroundSize = 'cover';
+      } else if (fitMode === 'center') {
+        this.containerEl.style.backgroundSize = 'auto';
+      } else {
+        // 'stretch' / 100% 100%: fits the wallpaper exact 100% width and 100% height so no top/bottom edges are clipped
+        this.containerEl.style.backgroundSize = '100% 100%';
+      }
 
       // Background image source
       let bgUrl = 'assets/wallpapers/wallpaper1.jpg';
